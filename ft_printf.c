@@ -2,53 +2,30 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void	ft_putchar(char c);
-int		ft_isexist(char c, char *s);
-
 int	ft_printf(const char *format, ...)
 {
-	int	i;
+	int		i;
+	t_flags	flags;
 
+	ft_memset(&flags, 0, sizeof(t_flags));
 	i = 0;
-
 	while (format[i])
 	{
 		if (format[i] == '%')
 		{
+			while (!flags.specifier)
+			{
+				if (ft_strchr("abshid", format[i]) != NULL)
+				{
+					printf("buldu \n"); // \n eklendi
+					flags.specifier = format[i];
 
-
+				}
+				i++;
+			}
 		}
-
 		ft_putchar(format[i]);
 		i++;
 	}
 	return (0);
-}
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-int ft_isexist(char c, char *s)
-{
-	while (*s)
-	{
-		if (*s == c)
-			return (1);
-		s++;
-	}
-	return (0);
-}
-
-
-
-int main() { 
-
-	
-	ft_printf("Hello %i \n"); // \n eklendi
-
-	//printf("Hello %i \n", ft_isexist('a',"asdf")); // \n eklendi
-
-	return (0); 
 }

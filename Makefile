@@ -1,23 +1,30 @@
-NAME = libftprintf.a
+NAME =	libftprintf.a
+CC = cc # Flag for implicit rules
+CFLAGS = -Wall -Wextra -Werror # Flag for implicit rules. Turn on debug info
+AR = ar rcs
+RM = rm -f
+SRC = ft_printf \
+	ft_putchar \
+	ft_strchr \
+	ft_memset \
 
-SRC = ft_printf.c
+
+SRCS = $(addsuffix .c, $(SRC))
+OBJS = $(addsuffix .o, $(SRC))
 
 all: $(NAME)
 
-CC = gcc
-
-CFLAGS = -Wall -Wextra -Werror
-
-OBJS = $(SRC:.c=.o)
-
 $(NAME): $(OBJS)
-	ar rcs ${NAME} ${OBJS}
+	$(AR) $(NAME) $(OBJS)
+
+%.o: %.c ft_printf.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 
